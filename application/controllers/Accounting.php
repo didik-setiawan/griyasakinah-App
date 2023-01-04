@@ -794,11 +794,17 @@ class Accounting extends CI_Controller{
     }
 
     public function pembangunan(){
-        $id_perum = $this->session->userdata('id_perumahan');
-        $q = "SELECT * FROM progres_pembangunan JOIN tbl_kavling ON progres_pembangunan.kavling_id = tbl_kavling.id_kavling WHERE tbl_kavling.id_perum = $id_perum";
+
+        if(isset($_GET['filter'])){
+            $data = $this->logistik->getUpahPekerja($_GET['filter'])->result();
+        } else {
+            $data = $this->logistik->getUpahPekerja(null)->result();
+        }
+
         $data = [
-            'pembangunan' => $this->db->query($q)->result(),
-            'kode' => $this->db->order_by('kode','ASC')->get('kode')->result()
+            'pembangunan' => $data,
+            'kode' => $this->db->order_by('kode','ASC')->get('kode')->result(),
+            'filter' => $this->master->getFilterUpahKerja()->result()
         ];
         $this->template->load('template', 'accounting/pembangunan', $data);
     }

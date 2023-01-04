@@ -14141,6 +14141,16 @@ $(document).on('click', '#set_edit', function() {
         });
     });
 
+
+    $('#filter').change(function(){
+        let fil = $(this).val();
+        if(fil == ''){
+            window.location.href = '<?= site_url('accounting/pembangunan') ?>';
+        } else {
+            window.location.href = '<?= site_url('accounting/pembangunan?filter=') ?>' + fil;
+        }
+    });
+
     </script>
 <?php } elseif($url_cek == 'accounting/kode/'){ ?>
     <script>
@@ -16110,13 +16120,11 @@ $(document).on('click', '#set_edit', function() {
 
     $('#filter').change(function(){
         let fil = $(this).val();
-        console.log(fil);
         if(fil == ''){
             window.location.href = '<?= site_url('accounting/pengajuan_material') ?>';
         } else {
             window.location.href = '<?= site_url('accounting/pengajuan_material?filter=') ?>' + fil;
         }
-
     });
 
 

@@ -23,10 +23,33 @@
                 <div class="card shadow">
                     <div class="card-body">
 
+                      <div class="row">
+                        <div class="col-lg-6">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                          <div class="form-group">
+                            <label>Filter by Proyek</label>
+                            <select name="filter" id="filter" class="form-control">
+                              <option value="">--All--</option>
+                              <?php foreach($filter as $f){ ?>
+
+                                <?php if($_GET['filter'] == $f->id_proyek) { ?>
+                                  <option value="<?= $f->id_proyek ?>" selected><?= $f->nama_proyek ?></option>
+                                <?php } else { ?>
+                                  <option value="<?= $f->id_proyek ?>"><?= $f->nama_proyek ?></option>
+                                <?php } ?>
+
+                              <?php } ?>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
                         <table class="table table-bordered" id="tablePembangunan">
                             <thead>
                                 <tr class="bg-dark text-ligt">
                                     <th>Tanggal</th>
+                                    <th>Proyek</th>
                                     <th>Jumlah</th>
                                     <th>Status</th>
                                     <th><i class="fa fa-cogs"></i></th>
@@ -36,6 +59,7 @@
                                 <?php foreach($pembangunan as $p){ ?>
                                 <tr>
                                     <td><?= $p->tanggal ?></td>
+                                    <td><?= $p->nama_proyek ?></td>
                                     <td class="text-right">Rp. <?= number_format($p->total) ?></td>
                                     <td class="text-center">
                                         

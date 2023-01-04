@@ -1955,6 +1955,24 @@ class Master_model extends CI_Model{
         return $this->db->get();
     }
 
+    public function getFilterUpahKerja(){
+        $id_perum = $this->session->userdata('id_perumahan');
+        $this->db->select('
+            progres_pembangunan.*,
+            tbl_kavling.*,
+            master_proyek.id as id_proyek,
+            master_proyek.nama_proyek
+        ')->from('progres_pembangunan')
+        ->join('tbl_kavling','progres_pembangunan.kavling_id = tbl_kavling.id_kavling')
+        ->join('tbl_proyek_upah','progres_pembangunan.upah_id = tbl_proyek_upah.id')
+        ->join('master_proyek','tbl_proyek_upah.proyek_id = master_proyek.id')
+        ->where('master_proyek.end', 0)
+        ->where('tbl_kavling.id_perum', $id_perum)
+        ->group_by('master_proyek.id');
+        return $this->db->get();
+    }
+
+
 
 }
 
