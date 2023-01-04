@@ -24,6 +24,29 @@
             <div class="card">
                 <div class="card-body">
 
+                <div class="row">
+                  <div class="col-lg-6">
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+
+                    <div class="form-group">
+                      <label>Filter by Proyek</label>
+                      <select name="filter" class="form-control" id="filter">
+                        <option value="">--All--</option>
+                        <?php foreach($filter as $f){ ?>
+                          <?php if($_GET['filter'] == $f->id){ ?>
+                            <option value="<?= $f->id ?>" selected><?= $f->nama_proyek ?></option>
+                          <?php } else { ?>
+                            <option value="<?= $f->id ?>"><?= $f->nama_proyek ?></option>
+                          <?php } ?>
+                        <?php } ?>
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+
+
                     <table class="table table-bordered" id="pegajuanTable">
                         <thead>
                             <tr class="bg-dark text-light">

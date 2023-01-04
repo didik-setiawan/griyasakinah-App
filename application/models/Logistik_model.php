@@ -974,13 +974,21 @@ class Logistik_model extends CI_Model{
         return $this->db->get();
     }
 
-    public function getDataPengajuanMaterial(){
+    public function getDataPengajuanMaterial($filter = null){
         $id_perum = $this->session->userdata('id_perumahan');
         $this->db->select('
             pengajuan_material.*,
             master_proyek.nama_proyek
         ')
-        ->from('pengajuan_material')->join('master_proyek','pengajuan_material.id_proyek = master_proyek.id')->where('pengajuan_material.id_perumahan', $id_perum);
+        ->from('pengajuan_material')
+        ->join('master_proyek','pengajuan_material.id_proyek = master_proyek.id')
+        ->where('pengajuan_material.id_perumahan', $id_perum)
+        ->where('master_proyek.end', 0);
+
+        if($filter){
+            $this->db->where('master_proyek.id', $filter);
+        }
+
         return $this->db->get();
     }
 

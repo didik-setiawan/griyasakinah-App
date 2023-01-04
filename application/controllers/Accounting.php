@@ -1847,10 +1847,18 @@ class Accounting extends CI_Controller{
     //7-9-2022
     public function pengajuan_material(){
         $id_perum = $this->session->userdata('id_perumahan');
+
+        if(isset($_GET['filter'])){
+            $data = $this->logistik->getDataPengajuanMaterial($_GET['filter'])->result();
+        } else {
+            $data = $this->logistik->getDataPengajuanMaterial(null)->result();
+        }
+
         $data = [
             'list' => $this->proyek->getPengajuanMaterial($id_perum),
             'kode' => $this->db->order_by('kode','ASC')->get('kode')->result(),
-            'data' => $this->logistik->getDataPengajuanMaterial()->result()
+            'data' => $data,
+            'filter' => $this->master->getFilterPengajuanMaterial()->result()
         ];
         $this->template->load('template', 'accounting/pengajuan_material', $data);
     }

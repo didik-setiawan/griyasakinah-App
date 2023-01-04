@@ -16108,6 +16108,18 @@ $(document).on('click', '#set_edit', function() {
     });
 
 
+    $('#filter').change(function(){
+        let fil = $(this).val();
+        console.log(fil);
+        if(fil == ''){
+            window.location.href = '<?= site_url('accounting/pengajuan_material') ?>';
+        } else {
+            window.location.href = '<?= site_url('accounting/pengajuan_material?filter=') ?>' + fil;
+        }
+
+    });
+
+
     </script>
 <?php } elseif($url_cek == 'accounting/laporan_kas/'){ ?>
     <script>
