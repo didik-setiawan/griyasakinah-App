@@ -1972,7 +1972,20 @@ class Master_model extends CI_Model{
         return $this->db->get();
     }
 
-
+    public function getFilterMaterialProyek(){
+        $id_perum = $this->session->userdata('id_perumahan');
+        $this->db->select('
+            pengajuan_material.*,
+            master_proyek.nama_proyek,
+            master_proyek.id as id_pro
+        ')
+        ->from('pengajuan_material')
+        ->join('master_proyek','pengajuan_material.id_proyek = master_proyek.id')
+        ->where('pengajuan_material.id_perumahan', $id_perum)
+        ->where('master_proyek.end', 0)
+        ->group_by('master_proyek.id');
+        return $this->db->get();
+    }
 
 }
 

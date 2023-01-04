@@ -1081,11 +1081,18 @@ class Proyek extends CI_Controller {
         checkUserLogin();
         $q = "SELECT * FROM master_supplier";
 
+        if(isset($_GET['filter'])){
+            $data = $this->Logistik_model->getDataPengajuanMaterial($_GET['filter'])->result();
+        } else {
+            $data = $this->Logistik_model->getDataPengajuanMaterial(null)->result();
+        }
+
         $data = [
             'logistik'      => $this->Proyek_model->PengajuanMaterial()->result(),
             'supplier'      => $this->db->query($q)->result(),
             'proyek'        => $this->db->get('master_proyek')->result(),
-            'data' => $this->Logistik_model->getDataPengajuanMaterial()->result(),
+            'data' => $data,
+            'filter' => $this->master->getFilterMaterialProyek()->result()
         ];
         $this->template->load('template', 'proyek/pengajuan_material',$data);
     }

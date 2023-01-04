@@ -4589,7 +4589,14 @@ if($url_cek == 'inventaris/daftar_barang/'){
 
             });
 
-            
+    $('#filter').change(function(){
+        let fil = $(this).val();
+        if(fil == ''){
+            window.location.href = '<?= site_url('proyek/pengajuan_material') ?>';
+        } else {
+            window.location.href = '<?= site_url('proyek/pengajuan_material?filter=') ?>' + fil;
+        }
+    });
 
         </script>
     <?php

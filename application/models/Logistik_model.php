@@ -970,6 +970,7 @@ class Logistik_model extends CI_Model{
         ->join('master_produk_unit','master_material.unit_id = master_produk_unit.id')
         ->join('tbl_tipe','tbl_proyek_material.tipe_id = tbl_tipe.id_tipe')
         ->where('pengajuan_material.id_pengajuan', $id)
+        ->where('master_proyek.end', 0)
         ->where('tbl_tipe.id_perum', $id_perum);
         return $this->db->get();
     }

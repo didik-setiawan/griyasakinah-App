@@ -24,13 +24,22 @@
                     </div>
                     <div class="card-body style="display: block;">
                         <div class="row">
-                            <div class="form-group col-sm-9">
+                            <div class="form-group col-lg-6">
                             </div>
-     
-                            <div class="form-group col-sm-3">
-                                
-                            </div>
-                            <div class="form-group col-sm-4">
+                            <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                              <div class="form-group">
+                                <label>Filter by Proyek</label>
+                                <select name="filter" id="filter" class="form-control">
+                                  <option value="">--All--</option>
+                                  <?php foreach($filter as $f){ ?>
+                                    <?php if($_GET['filter'] == $f->id_pro){ ?>
+                                      <option value="<?= $f->id_pro ?>" selected><?= $f->nama_proyek ?></option>
+                                    <?php } else { ?>
+                                      <option value="<?= $f->id_pro ?>"><?= $f->nama_proyek ?></option>
+                                    <?php } ?>
+                                  <?php } ?>
+                                </select>
+                              </div>
                             </div>
 
                             <div class="col-sm-12 table-responsive">
