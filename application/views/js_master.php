@@ -3004,6 +3004,15 @@ $url_cek = cek_url();
                 }
             });
 
+            $.ajax({
+                url: '<?= site_url('pemasukan/show_sisa_pembayaran') ?>',
+                data: {id: id, tipe: tipe, sisa: sisa},
+                type: 'POST',
+                success: function(data){
+                   $('#loadSisa').html(data);
+                }
+            });
+
             if(sisa == 0){
                 $('#toSave').attr('disabled', true);
                 $('#tanggal_bayar').attr('disabled', true);

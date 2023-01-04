@@ -296,6 +296,7 @@
                   </tr>
                 </thead>
                 <tbody id="loadHistory"></tbody>
+                <tfoot id="loadSisa"></tfoot>
                 
               </table>
 
