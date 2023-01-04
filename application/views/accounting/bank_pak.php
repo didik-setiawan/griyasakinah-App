@@ -16,6 +16,7 @@
             <th>Angsuran</th>
             <th>Jumlah Pembayaran</th>
             <th>Jatuh Tempo</th>
+            <th>keterangan</th>
             <th><i class="fa fa-cogs"></i></th>
         </tr>
     </thead>
@@ -42,7 +43,13 @@
                 <small class="text-danger">(Denda : Rp. <?= number_format($denda); ?>)</small>
             </td>
             <td><?php $date = date_create($d->jatuh_tempo); echo date_format($date, 'd F Y'); ?></td>
-
+            <td>
+                <?php if($total_bayar > 0){ ?>
+                    <span class="badge badge-danger">Belum Lunas</span>
+                <?php } else if($total_bayar == 0 || $total_bayar < 0) { ?>
+                    <span class="badge badge-success">Lunas</span>
+                <?php } ?>
+            </td>
             <td>
                 <?php if($d->status == 0){ ?>
                     <button <?= $action ?> class="btn btn-xs btn-success toCode" data-id="<?= $d->id_pak ?>" data-type="bank_pak"><i class="fa fa-check"></i></button>

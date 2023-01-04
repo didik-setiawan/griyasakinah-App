@@ -19,6 +19,7 @@ if(empty($data)){ ?>
 
     $total_bayar = $data->tanda_jadi - $terbayar;
 
+
 ?>
 
     <table class="table table-bordered">
@@ -26,13 +27,19 @@ if(empty($data)){ ?>
             <tr>
                 <th>Tanggal</th>
                 <th>Jumlah</th>
+                <th>keterangan</th>
                 <th><i class="fa fa-cogs"></i></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><?= date_format($tanggal, 'd F Y') ?></td>
-                <td>Rp. <?= number_format($data->tanda_jadi) ?></td>
+                <td>Rp. <?= number_format($data->tanda_jadi) ; ?></td>
+                <td><?php if($total_bayar > 0){ ?>
+                    <span class="badge badge-danger">Belum Lunas</span>
+                    <?php } else if($total_bayar == 0 || $total_bayar < 0) { ?>
+                        <span class="badge badge-success">Lunas</span>
+                    <?php } ?></td>
                 <td>
                     <?php if($data->status == 0){ ?>
                         <button <?= $action ?> class="btn btn-xs btn-success toCode" data-id="<?= $data->id_transaksi_bank ?>" data-type="bank_tj"><i class="fa fa-check"></i></button>
