@@ -1,0 +1,132 @@
+status_pekerjaan_insidentil
+	=> 1. menunggu super admin
+	=> 2. Approved super admin
+	=> 3. Approved Accounting
+	=> 0. di Tolak super admin
+
+
+pengajuan_material
+	=> id pengajuan	
+	=> id proyek
+	=> id tipe
+	=> time
+	=> tgl pengajuan 
+	=> status pengajuan	-> 1. di ajukan
+				-> 2. Approved
+				-> 3. menunggu accounting
+				-> 4. menunggu super admin
+				-> 5. Approved super admin
+				-> 0. di Tolak super admin
+	=> supplier
+	=> id_perumahan
+	=> title_kode
+
+nota_material
+	=> id pengajuan
+	=> nota
+	=> tgl_upload
+
+cicil_material
+	=> id_cicil
+	=> id_pengajuan
+	=> tanggal_input
+	=> jml_pengajuan
+	=> bukti_transfer
+	=> status
+
+master_mandor
+	=> id mandor
+	=> nama mandor
+	=> no telp
+	=> no rekening
+	=> bank
+	=> atas nama
+
+mandor_proyek
+	=> id_mandor_proyek
+	=> id_mandor
+	=> id_proyek_upah
+	=> id_blok
+
+cicil_insidentil
+	=> id_cicil
+	=> id_insidentil
+	=> tanggal_input
+	=> jml_pengajuan
+	=> bukti_transfer
+	=> status
+
+
+kas_operasional
+	=> id kas
+	=> tgl input
+	=> Keterangan
+	=> Jumlah
+	=> id_perumahan
+	=> title_kode
+	=> status
+
+cicil kas
+	=> id cicil
+	=> id kas
+	=> tanggal
+	=> jml
+	=> bukti
+	=> status
+
+cicil fee marketing
+	=> id cicil
+	=> id marketing
+	=> tanggal
+	=> jumlah
+	=> bukti
+	=> status
+
+
+cicil pembatalan
+	=> id cicil
+	=> id pembatalan
+	=> tanggal
+	=> jumlah
+	=> bukti
+	=> status
+
+cicil progres
+	=> id cicil
+	=> id progres
+	=> tanggal
+	=> jumlah
+	=> bukti
+	=> status
+
+cicil pengeluaran lain
+	=> id cicil
+	=> id progres
+	=> tanggal
+	=> jumlah
+	=> bukti
+	=> status
+
+status pembebasan lahan
+	=> 1 menunggu accounting
+	=> 2. Approved accounting
+
+pembebasan lahan
+	=> title_kode
+
+cicil pembebasan lahan
+	=> id cicil
+	=> id pembebasan
+	=> tanggal
+	=> jumlah
+	=> bukti
+	=> status
+
+pemasukan_lain
+	=> id pemasukan
+	=> keterangan
+	=> jumlah
+	=> tanggal
+	=> status
+	=> bukti
+	=> title_kode

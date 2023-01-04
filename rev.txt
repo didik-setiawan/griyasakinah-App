@@ -1,0 +1,48 @@
+material keluar bisa piliih kavling untuk yg mana
+data harga material RAB di keluarkan
+saat mengisi kode di accounting tanggal input mcm pembayaran via cash atau tempo
+accounting bisa upload bukti pembayaran
+upload nota pembayaran oleh manager proyek
+approve super admin masuk ke massing" menu
+accounting buat staf lagi khusus buat menu pemasukan
+accounting ada menu laporan isinya laporan bulanan & arus kas
+penambaha no rek di master supplier
+
+perubahan db
+	=> menu->new
+	=> menu access->new
+	=> db_group-> 7(asisten accounting)
+	=> master_logistik => nota(varchar 200)
+				=> time
+	=> master_logistik_detail  	=> tgl_mcm (date(null))
+			   		=> pembayaran (varchar(100)
+			   		=> bukti_pembayaran(varchar(100))
+	=> master_logistik_keluar => kavling(int)
+	=> master supplier	=> nama bank (varchar(100))
+				=> atas nama (varchar(100))
+				=> no rek (varchar(100))
+
+-8102411475066043451
+
+
+
+
+
+
+
+
+
+
+new rev
+-logistik->ajukan_material = bisa mengajukan lebih 1 material dalam 1 pengajuan
+-proyek->pengajuan_material = tambah data supplier berdasarkan material" dari logistik & nota
+-accounting->pengajuan material = data pengajuan sesuai dengan yg di ajukan dari logistik
+-input mcm data bisa berkali"
+-penambahan master mandor
+-proyek->progres_pembangunan = tambahan input data mandor per kavling yg di kerjakan
+ 
+
+new rev 2.0
+- pengajuan jumlah uang tiap per cicilan
+- bukti transfer setelah di approve oleh super admin
+- konsep untuk kas operasional dan proyek insidentil sama dengan pengajuan material

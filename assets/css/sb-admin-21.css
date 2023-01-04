@@ -1,0 +1,220 @@
+/*!
+ * Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+.has-success .checkbox,
+.has-success .checkbox-inline,
+.has-success .control-label,
+.has-success .help-block,
+.has-success .radio,
+.has-success .radio-inline,
+.has-success.checkbox label,
+.has-success.checkbox-inline label,
+.has-success.radio label,
+.has-success.radio-inline label {
+ color:#3c763d
+}
+.has-success .form-control {
+ border-color:#3c763d;
+ -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+ box-shadow:inset 0 1px 1px rgba(0,0,0,.075)
+}
+.has-success .form-control:focus {
+ border-color:#2b542c;
+ -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #67b168;
+ box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #67b168
+}
+.has-success .input-group-addon {
+ color:#3c763d;
+ background-color:#dff0d8;
+ border-color:#3c763d
+}
+.has-success .form-control-feedback {
+ color:#3c763d
+}
+.has-warning .checkbox,
+.has-warning .checkbox-inline,
+.has-warning .control-label,
+.has-warning .help-block,
+.has-warning .radio,
+.has-warning .radio-inline,
+.has-warning.checkbox label,
+.has-warning.checkbox-inline label,
+.has-warning.radio label,
+.has-warning.radio-inline label {
+ color:#8a6d3b
+}
+.has-warning .form-control {
+ border-color:#8a6d3b;
+ -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+ box-shadow:inset 0 1px 1px rgba(0,0,0,.075)
+}
+.has-warning .form-control:focus {
+ border-color:#66512c;
+ -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #c0a16b;
+ box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #c0a16b
+}
+.has-warning .input-group-addon {
+ color:#8a6d3b;
+ background-color:#fcf8e3;
+ border-color:#8a6d3b
+}
+.has-warning .form-control-feedback {
+ color:#8a6d3b
+}
+.has-error .checkbox,
+.has-error .checkbox-inline,
+.has-error .control-label,
+.has-error .help-block,
+.has-error .radio,
+.has-error .radio-inline,
+.has-error.checkbox label,
+.has-error.checkbox-inline label,
+.has-error.radio label,
+.has-error.radio-inline label {
+ color:#a94442
+}
+.has-error .form-control {
+ border-color:#a94442;
+ -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+ box-shadow:inset 0 1px 1px rgba(0,0,0,.075)
+}
+.has-error .form-control:focus {
+ border-color:#843534;
+ -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483;
+ box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483
+}
+.has-error .input-group-addon {
+ color:#a94442;
+ background-color:#f2dede;
+ border-color:#a94442
+}
+.has-error .form-control-feedback {
+ color:#a94442
+}
+
+.col-xs-offset-12 {
+ margin-left:100%
+}
+.col-xs-offset-11 {
+ margin-left:91.66666667%
+}
+.col-xs-offset-10 {
+ margin-left:83.33333333%
+}
+.col-xs-offset-9 {
+ margin-left:75%
+}
+.col-xs-offset-8 {
+ margin-left:66.66666667%
+}
+.col-xs-offset-7 {
+ margin-left:58.33333333%
+}
+.col-xs-offset-6 {
+ margin-left:50%
+}
+.col-xs-offset-5 {
+ margin-left:41.66666667%
+}
+.col-xs-offset-4 {
+ margin-left:33.33333333%
+}
+.col-xs-offset-3 {
+ margin-left:25%
+}
+.col-xs-offset-2 {
+ margin-left:16.66666667%
+}
+.col-xs-offset-1 {
+ margin-left:8.33333333%
+}
+.col-xs-offset-0 {
+ margin-left:0
+}
+
+@media (min-width:992px) {
+ .col-md-offset-12 {
+  margin-left:100%
+ }
+ .col-md-offset-11 {
+  margin-left:91.66666667%
+ }
+ .col-md-offset-10 {
+  margin-left:83.33333333%
+ }
+ .col-md-offset-9 {
+  margin-left:75%
+ }
+ .col-md-offset-8 {
+  margin-left:66.66666667%
+ }
+ .col-md-offset-7 {
+  margin-left:58.33333333%
+ }
+ .col-md-offset-6 {
+  margin-left:50%
+ }
+ .col-md-offset-5 {
+  margin-left:41.66666667%
+ }
+ .col-md-offset-4 {
+  margin-left:33.33333333%
+ }
+ .col-md-offset-3 {
+  margin-left:25%
+ }
+ .col-md-offset-2 {
+  margin-left:16.66666667%
+ }
+ .col-md-offset-1 {
+  margin-left:8.33333333%
+ }
+ .col-md-offset-0 {
+  margin-left:0
+ }
+}
+
+@media (min-width:768px) {
+ .col-sm-offset-12 {
+  margin-left:100%
+ }
+ .col-sm-offset-11 {
+  margin-left:91.66666667%
+ }
+ .col-sm-offset-10 {
+  margin-left:83.33333333%
+ }
+ .col-sm-offset-9 {
+  margin-left:75%
+ }
+ .col-sm-offset-8 {
+  margin-left:66.66666667%
+ }
+ .col-sm-offset-7 {
+  margin-left:58.33333333%
+ }
+ .col-sm-offset-6 {
+  margin-left:50%
+ }
+ .col-sm-offset-5 {
+  margin-left:41.66666667%
+ }
+ .col-sm-offset-4 {
+  margin-left:33.33333333%
+ }
+ .col-sm-offset-3 {
+  margin-left:25%
+ }
+ .col-sm-offset-2 {
+  margin-left:16.66666667%
+ }
+ .col-sm-offset-1 {
+  margin-left:8.33333333%
+ }
+ .col-sm-offset-0 {
+  margin-left:0
+ }
+
+}
