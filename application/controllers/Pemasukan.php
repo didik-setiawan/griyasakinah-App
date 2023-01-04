@@ -503,10 +503,21 @@ class Pemasukan extends CI_Controller {
 
 
 
+
+        if(empty($data)){
+            $html = '
+                <tr>
+                    <td colspan="7" class="text-center">No data result</td>
+                </tr>
+            ';
+        } else {
+
             $i = 1;
             $html = '';
+            $terbayar = 0;
             foreach($data as $d){
                 $date = date_create($d->tanggal);
+
 
                 if($d->status == 0){
                     $txt = 'Di tolak super admin';
@@ -554,7 +565,7 @@ class Pemasukan extends CI_Controller {
                     </tr>
                 ';
             }
-
+        }
         echo $html;
 
     }
@@ -914,6 +925,69 @@ class Pemasukan extends CI_Controller {
             'tanggal' => date('Y-m-d')
         ];
         $this->db->insert('approved_history', $data);
+    }
+
+
+    public function show_sisa_pembayaran(){
+        $tipe = $_POST['tipe'];
+        $id = $_POST['id'];
+        $sisa = $_POST['sisa'];
+
+        if($tipe == 'bank_tjl'){
+            $db = 'bank_cicil_tjl';
+        } 
+        else if($tipe == 'bank_um'){
+            $db = 'bank_cicil_um';
+        } 
+        else if($tipe == 'bank_kt'){
+            $db = 'bank_cicil_kt';
+        }
+        else if($tipe == 'bank_pak'){
+            $db = 'bank_cicil_pak';
+        }
+        else if($tipe == 'bank_lain'){
+            $db = 'bank_cicil_lain';
+        }
+        else if($tipe == 'bank_realisasi'){
+            $db = 'bank_cicil_rb';
+        }
+        else if($tipe == 'bank_piutang'){
+            $db = 'bank_cicil_pb';
+        }
+        else if($tipe == 'inhouse_hk'){
+            $db = 'inhouse_cicil_hk';
+        }
+        else if($tipe == 'inhouse_tjl'){
+            $db = 'inhouse_cicil_tjl';
+        }
+        else if($tipe == 'inhouse_um'){
+            $db = 'inhouse_cicil_um';
+        }
+        else if($tipe == 'inhouse_kt'){
+            $db = 'inhouse_cicil_kt';
+        }
+        else if($tipe == 'bank_tj'){
+            $db = 'bank_cicil_tj';
+        }
+        else if($tipe == 'inhouse_tj'){
+            $db = 'inhouse_cicil_tj';;
+        }
+
+        $q = "SELECT SUM(jumlah) as total FROM $db WHERE id_pembayaran = $id";
+        $terbayar = $this->db->query($q)->row()->total;
+    
+
+        $output = '<tr>
+                    <th colspan="5">Total terbayar</th>
+                    <th colspan="2">Rp. '.number_format($terbayar).'</th>
+                  </tr>
+                  <tr>
+                    <th colspan="5">Sisa pembayaran</th>
+                    <th colspan="2">Rp. '.number_format($sisa).'</th>
+                  </tr>';
+
+        echo $output;
+
     }
 
 }
