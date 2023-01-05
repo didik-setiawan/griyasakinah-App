@@ -53,16 +53,31 @@
                                 <th>Nama</th>
                                 <th>No Telp</th>
                                 <th>Blok</th>
+                                <th>keterangan</th>
                                 <th><i class="fa fa-cogs"></i></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i = 1; foreach($bank as $b){ ?>
+                            <?php $i = 1; foreach($bank as $b){ 
+
+                              $keterangan = $this->master->getKeteranganKonsumen('inhouse', $b->id_konsumen);
+
+                            ?>
+
+                            
+
                             <tr>
                                 <td><?= $i++ ?></td>
                                 <td><?= $b->nama_konsumen ?></td>
                                 <td><?= $b->no_hp ?></td>
                                 <td><?= $b->blok . $b->no_rumah ?></td>
+                                <td>
+                                  <?php if($keterangan > 0){ ?>
+                                    <span class="badge badge-danger">Belum Lunas</span>
+                                  <?php } else if($keterangan == 0 || $keterangan < 0){ ?>
+                                    <span class="badge badge-success">Lunas</span>
+                                  <?php } ?>  
+                                </td>
                                 <td>
                                     <button class="btn btn-sm btn-info mb-2 tj"  data-toggle="modal" data-target="#tj" data-id="<?= $b->id_konsumen ?>">Tanda Jadi <i class="fa fa-arrow-right" ></i></button><br>
 

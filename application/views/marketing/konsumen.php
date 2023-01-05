@@ -32,6 +32,8 @@
                     </div>
                 <?php } ?>
 
+                
+
                         <table class="table table-bordered" id="table-konsumen">
                             <thead>
                                 <tr class="bg-dark text-light">
