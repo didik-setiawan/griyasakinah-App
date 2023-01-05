@@ -4,7 +4,7 @@
     <td class="text-center"><b><?= $data->nama_bank ?></b> <br> <span><?= $data->no_rek ?></span> <br> <small class="text-info"><?= $data->atas_nama ?></small></td>
     <td class="text-center">
         <?php foreach($nota as $n){ ?>
-            <img src="<?= base_url('assets/bukti_pembayaran/') . $n->nota ?>" width="30%" alt="nota pembayaran">
+            <img class="showImage" src="<?= base_url('assets/bukti_pembayaran/') . $n->nota ?>" width="30%" alt="nota pembayaran">
         <?php } ?>
     </td>
     <td class="text-center">Rp. <?= number_format($total_real) ?></td>

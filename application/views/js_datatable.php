@@ -16135,6 +16135,13 @@ $(document).on('click', '#set_edit', function() {
     });
 
 
+    $(document).on('click', '.showImage', function(){
+        $('#modalShowImage').modal('show');
+        const path = $(this).attr('src');
+        $('.ZoomImage').html('<img src="'+ path +'" width="100%">');
+    });
+
+
     </script>
 <?php } elseif($url_cek == 'accounting/laporan_kas/'){ ?>
     <script>

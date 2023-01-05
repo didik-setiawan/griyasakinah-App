@@ -81,7 +81,13 @@ $profile = $this->master_model->getProfile(1)->row();
     <link rel="stylesheet" href="<?= base_url('assets/adminlte3/plugins/summernote/summernote-bs4.css') ?>">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    
+    <style>
+
+        .showImage:hover {
+            cursor: pointer;
+        }
+
+    </style>
 
 </head>
 

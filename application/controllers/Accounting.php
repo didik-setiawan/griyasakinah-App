@@ -2510,7 +2510,7 @@ class Accounting extends CI_Controller{
             if($h->bukti_pembayaran == null){
                 $bukti_img = '-';
             } else {
-                $bukti_img = '<img src="'.base_url('/assets/bukti_pembayaran/'). $h->bukti_pembayaran.'" width="20%">';
+                $bukti_img = '<img class="showImage" src="'.base_url('/assets/bukti_pembayaran/'). $h->bukti_pembayaran.'" width="20%">';
             }
 
 
