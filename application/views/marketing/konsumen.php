@@ -33,7 +33,7 @@
                 <?php } ?>
 
                 
-
+                    <a href="<?= site_url('marketing/rekap_konsumen'); ?>" class="btn btn-sm btn-success mb-3">Rekap Konsumen</a>
                         <table class="table table-bordered" id="table-konsumen">
                             <thead>
                                 <tr class="bg-dark text-light">

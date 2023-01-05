@@ -3526,4 +3526,13 @@ class Marketing extends CI_Controller {
         }
     }
 
+    public function rekap_konsumen(){
+
+        $data = [
+            'info' => ['Banner', 'Brosur', 'Teman', 'Media Sosial', 'Lainnya']
+        ];
+        $this->template->load('template', 'marketing/rekap_konsumen', $data);
+    }
+
+
 }
