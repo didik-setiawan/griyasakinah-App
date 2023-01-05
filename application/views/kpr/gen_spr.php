@@ -201,7 +201,7 @@
         
             <td>
                 PT. Tunggal GriyaSakinah <br>
-                Marketing
+                Marketing/Admin
                 <br><br><br><br>
                 <p class="text-center"><?= $admin ?></p>
             </td>
