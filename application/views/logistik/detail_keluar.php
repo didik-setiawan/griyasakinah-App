@@ -158,6 +158,7 @@ if($group == 1){
                                             <button class="btn btn-primary btn-sm <?= $act ?>" data-toggle="modal" id="set_edit" data-id="<?= $row->id_logistik ?>" data-target="#add-rab-material">
                                                 <i class="fa fa-plus-circle" data-toggle="tooltip" data-placement="top"></i> Keluarkan
                                             </button>
+
                                                 <?php }else{?>
                                             <button class="btn btn-primary btn-sm <?= $act ?>" disabled>
                                                 <i class="fa fa-plus-circle" data-toggle="tooltip" data-placement="top"></i> Keluarkan
@@ -240,10 +241,10 @@ if($group == 1){
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group col-sm-12">
                             <label>Tipe</label>
-                            <input type="text" readonly name="tipe" id="tipe" class="form-control">
+                                <input type="text" readonly name="tipe" id="tipe" class="form-control">
                             </div>
                             <div class="form-group col-sm-12">
-                            <label>Kavling1</label>
+                            <label>Kavling</label>
                                 <!-- <select class="form-control" id="kavling" disabled multiple="multiple" name="kavling" required> -->
                                 <select name="kavling" id="kavling" class="form-control">
                                     <option value="">--Pilih--</option>
@@ -275,3 +276,5 @@ if($group == 1){
             </form>
         </div>
     </div>
+
+

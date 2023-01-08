@@ -145,7 +145,7 @@ if(HakAkses(7)->update == 1){
                     </div>
                     <div class="modal-body">
                     <p>Apakah Anda Yakin Ingin Mengeluarkan Material?</p>
-                    <input type="hidden" name="id" id="id">
+                        <input type="hidden" name="id" id="id">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -156,3 +156,25 @@ if(HakAkses(7)->update == 1){
         </div>
 
 <?php } ?>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="detailMaterialKeluar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-light">
+        <h5 class="modal-title" id="exampleModalLabel">Detail Material Keluar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body loadDetailKeluar">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

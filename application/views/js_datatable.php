@@ -2512,23 +2512,26 @@ if($url_cek == 'inventaris/daftar_barang/'){
             })
 
             $(document).on('click', '#approve', function() {
-                var id = $(this).data('id');
-                $.ajax({
-                    type    : 'POST',
-                    url     : '<?=site_url('proyek/proses/')?>',
-                    data    : {
-                        'get_approve'   : true, 
-                        'id' : id,
-                    },
-                    dataType    : 'json',
-                    success: function(data) {
-                        $('#id').val(id);
-                    }
-                })
+                let id = $(this).data('id');
+             
+                $('#id_toApprove').val(id);
+                $('#id').val(id);
+                // $.ajax({
+                //     type    : 'POST',
+                //     url     : '<?=site_url('proyek/proses/')?>',
+                //     data    : {
+                //         'get_approve'   : true, 
+                //         'id' : id,
+                //     },
+                //     dataType    : 'json',
+                //     success: function(data) {
+                //         $('#id').val(id);
+                //     }
+                // })
             });
 
             $(document).on('click', '#approve_save', function() {
-                var id      = $('#id').val();
+                var id      = $('#id_toApprove').val();
                 // var id = $(this).data('id');
 
                 $.ajax({
@@ -2750,7 +2753,6 @@ if($url_cek == 'inventaris/daftar_barang/'){
                     }
                 })
             });
-
 
 
            $(document).on('click','.btn-end',function(){
@@ -6201,7 +6203,22 @@ if($url_cek == 'inventaris/daftar_barang/'){
             $(document).on('click', '#cetak_laporan', function() {
                 var id = $(this).data('id');
                 window.open('<?=site_url('cetak/material_keluar/')?>' + id + '?pdf=0', '_blank', 'width=900,height=800');
-            })
+            });
+
+            $(document).on('click','.laporan', function(){
+                $('#detailMaterialKeluar').modal('show');
+                let id = $(this).data('id');
+
+                $.ajax({
+                    url: '<?= site_url('logistik/loadLaporan') ?>',
+                    data: {id: id},
+                    type: 'POST',
+                    success: function(d){
+                        $('.loadDetailKeluar').html(d);
+                    }
+                });
+
+            });
 
     </script>
     <?php
@@ -6379,6 +6396,13 @@ $(document).on('click', '#add_save', function() {
                         text: 'Harap isi quantity',
                     })
                 }
+                else if(result.status == 4){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Max material tidak di temukan',
+                    })
+                }
                 else{
                     Swal.fire({
                         icon: 'error',
@@ -6435,6 +6459,33 @@ $(document).on('click', '#set_edit', function() {
         }
     })
 });
+
+$(document).on('change','#kavling', function(){
+    let kavling = $(this).val();
+    let logistik = $('#id_logistik').val();
+    
+
+    $.ajax({
+        url: '<?=site_url('logistik/proses/')?>',
+        data    : {
+            'getMaxOut'    : true, 
+            'id'            : logistik,
+            'kavling' : kavling
+        },
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(d){
+            $('#max').val(d.max_out);
+        }
+    });
+
+});
+
+$(document).on('click','.detailKeluar', function(){
+    $('#detailMaterialKeluar').modal('show');
+});
+
+
 </script>
     <?php
 }elseif($url_cek == 'database/customerxxxx/'){

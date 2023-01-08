@@ -714,7 +714,6 @@ class Logistik_model extends CI_Model{
 
         $this->db->join('master_proyek', 'master_proyek.id = tbl_proyek_material.proyek_id');
 
-
         $this->db->join('tbl_kavling', 'tbl_kavling.id_tipe = tbl_proyek_material.tipe_id');
         $this->db->join('tbl_tipe', 'tbl_kavling.id_tipe = tbl_tipe.id_tipe');
         $this->db->join('tbl_perumahan', 'tbl_perumahan.id_perumahan = tbl_kavling.id_perum');
@@ -1172,6 +1171,51 @@ class Logistik_model extends CI_Model{
 
         return $this->db->get();
     }
+
+
+    public function getKavlingByProyek($id_pro){
+        $this->db->select('
+            master_proyek_kavling.proyek_id,
+            tbl_kavling.blok,
+            tbl_kavling.id_kavling,
+            tbl_kavling.no_rumah,
+            tbl_tipe.tipe
+        ')->from('master_proyek_kavling')
+        ->join('tbl_kavling', 'master_proyek_kavling.kavling_id = tbl_kavling.id_kavling')
+        ->join('tbl_tipe', 'tbl_kavling.id_tipe = tbl_tipe.id_tipe')
+        ->where('master_proyek_kavling.proyek_id', $id_pro);
+        return $this->db->get();
+    }
+
+    public function getJenisMaterialKeluar($kavling, $proyek){
+        $this->db->select('
+            master_produk_kategori.*,
+        ')
+        ->from('master_produk_kategori')
+        ->join('master_logistik','master_produk_kategori.id = master_logistik.kategori_id')
+        ->join('material_keluar','master_logistik.id = material_keluar.id_logistik')
+        ->where('master_logistik.id_proyek', $proyek)
+        ->where('material_keluar.kavling_id', $kavling)
+        ->group_by('master_produk_kategori.id');
+        return $this->db->get();
+    }
+
+    public function getMaterialKeluar($id_pro, $kavling, $jenis){
+        $this->db->select('
+            master_material.nama_material,
+            master_produk_unit.nama_satuan,
+            SUM(jml_keluar) as keluar
+        ')->from('master_material')
+        ->join('master_produk_unit','master_material.unit_id = master_produk_unit.id')
+        ->join('master_logistik','master_material.id = master_logistik.material_id')
+        ->join('material_keluar','master_logistik.id = material_keluar.id_logistik')
+        ->where('master_logistik.kategori_id', $jenis)
+        ->where('material_keluar.kavling_id', $kavling)
+        ->where('master_logistik.id_proyek', $id_pro)
+        ->group_by('master_material.id');
+        return $this->db->get();
+    }
+
 
 }
 

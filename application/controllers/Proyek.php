@@ -178,10 +178,12 @@ class Proyek extends CI_Controller {
 
         }elseif(isset($_POST['approve_pengajuan'])){
             // print_r($post);
-                $data = [
-                    'approve'         => 1,
-                ];
-                $this->Proyek_model->ApprovePengajuan($post['id'], $data);
+                // $data = [
+                //     'approve'         => 1,
+                // ];
+                // $this->Proyek_model->ApprovePengajuan($post['id'], $data);
+
+                $this->db->set('approve', 1)->where('id', $post['id'])->update('master_proyek');
     
                 if($this->db->affected_rows() > 0) {
                     $params = array("success" => true);
@@ -979,6 +981,7 @@ class Proyek extends CI_Controller {
           
             $row[] = '
             <button class="btn btn-secondary btn-xs" id="detail_keluar" data-id="'.$c->id.'"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="Detail"></i> Detail</button>
+            <button class="btn btn-primary btn-xs laporan" data-id="'.$c->id.'"><i class="fa fa-book"></i> Laporan Material</button>
             ';
 
             $data[] = $row;

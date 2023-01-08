@@ -184,7 +184,7 @@ if(HakAkses(7)->delete == 1){
                     </div>
                     <div class="modal-body">
                     <p>Apakah Anda Yakin Ingin Mengapprove Data?</p>
-                    <input type="hidden" name="id" id="id">
+                    <input type="hidden" name="id" id="id_toApprove">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

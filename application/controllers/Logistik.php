@@ -380,11 +380,16 @@ class Logistik extends CI_Controller {
                 $params = array("success" => false, "status" => 3); 
                 echo json_encode($params);
                 die;
-            }
+            } else if(empty($_POST['id_max'])){
+                $params = array("success" => false, "status" => 4); 
+                echo json_encode($params);
+                die;
+            } 
             
             $id_max = $post['id_max'];
             $id = $post['id_proyek'];
             $logistik = $post['id_logistik'];
+            $kavling = $post['kavling'];
         
             $mat ="SELECT tbl_max_material.*
             FROM `tbl_max_material`
@@ -402,11 +407,17 @@ class Logistik extends CI_Controller {
             WHERE logistik_stok.logistik_id = $logistik";
             $stok_mat = $this->db->query($stok)->row();
            
+
+            $q = "SELECT SUM(jml_keluar) as keluar FROM material_keluar WHERE id_logistik = $logistik AND kavling_id = $kavling";
+            $m_out = $this->db->query($q)->row()->keluar;
+
         
             $hasil = 0;
             $tot_keluar = 0;
                 
           
+            
+
             //Cek Create & Edit
             if($post['id_keluar'] == null){
 
@@ -414,7 +425,8 @@ class Logistik extends CI_Controller {
                 if($stok_mat->stok > $material->max)
                 {
                         //CEK QUANTITY
-                    if($post['quantity'] > $material->max){  //
+                    $max_out = $material->max - $m_out;
+                    if($post['quantity'] > $max_out){  //
                         $params = array("success" => false, "status" => 1); 
                     }else{
                         $hasil = $stok_mat->stok - $post['quantity'];
@@ -433,8 +445,15 @@ class Logistik extends CI_Controller {
                          ];
                 
                         $this->Logistik_model->addMaterialKeluar($data);
-                
                         $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
+
+                        $out = [
+                            'id_logistik' => $logistik,
+                            'jml_keluar' => $post['quantity'],
+                            'kavling_id' => $kavling
+                        ];
+        
+                        $this->db->insert('material_keluar', $out);
 
                         if($this->db->affected_rows() > 0) {
                             $params = array("success" => true);
@@ -445,7 +464,8 @@ class Logistik extends CI_Controller {
                 }else{ //ELSE Cek Perbandingan Max/Quantity RAB
 
                     //CEK QUANTITY
-                    if($post['quantity'] > $stok_mat->stok){
+                    $max_out = $stok_mat->stok - $m_out;
+                    if($post['quantity'] > $max_out){
                         $params = array("success" => false, "status" => 1); 
                     }else{
 
@@ -468,6 +488,14 @@ class Logistik extends CI_Controller {
                 
                         $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
 
+                        $out = [
+                            'id_logistik' => $logistik,
+                            'jml_keluar' => $post['quantity'],
+                            'kavling_id' => $kavling
+                        ];
+        
+                        $this->db->insert('material_keluar', $out);
+
                         if($this->db->affected_rows() > 0) {
                             $params = array("success" => true);
                         } else {
@@ -475,6 +503,9 @@ class Logistik extends CI_Controller {
                         }
                     }
                 }
+
+                
+
                 echo json_encode($params);
 
                 //ELSE Cek CREATE & EDIT
@@ -484,7 +515,8 @@ class Logistik extends CI_Controller {
                 if($stok_mat->stok > $material->max)
                 {
                     //CEK QUANTITY
-                    if($post['quantity'] > $material->max){
+                    $max_out = $material->max - $m_out;
+                    if($post['quantity'] > $max_out){
                         $params = array("success" => false, "status" => 1); 
                     }else{
                         $hasil = $stok_mat->stok - $post['quantity'];
@@ -504,6 +536,14 @@ class Logistik extends CI_Controller {
                         $this->Logistik_model->edit_Matkeluar($post['id_keluar'], $data);
 
                         $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
+
+                        $out = [
+                            'id_logistik' => $logistik,
+                            'jml_keluar' => $post['quantity'],
+                            'kavling_id' => $kavling
+                        ];
+        
+                        $this->db->insert('material_keluar', $out);
 
                         if($this->db->affected_rows() > 0) {
                             $params = array("success" => true);
@@ -515,7 +555,8 @@ class Logistik extends CI_Controller {
                 }else{ //ELSE Cek Perbandingan Max/Quantity RAB
                     
                     //CEK QUANTITY
-                    if($post['quantity'] > $stok_mat->stok){
+                    $max_out = $stok_mat->stok - $m_out;
+                    if($post['quantity'] > $max_out){
                         $params = array("success" => false, "status" => 1); 
                     }else{
                         $hasil = $stok_mat->stok - $post['quantity'];
@@ -536,6 +577,14 @@ class Logistik extends CI_Controller {
 
                         $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
 
+                        $out = [
+                            'id_logistik' => $logistik,
+                            'jml_keluar' => $post['quantity'],
+                            'kavling_id' => $kavling
+                        ];
+        
+                        $this->db->insert('material_keluar', $out);
+
                         if($this->db->affected_rows() > 0) {
                             $params = array("success" => true);
                         } else {
@@ -543,6 +592,7 @@ class Logistik extends CI_Controller {
                         }
                     }
                 }
+
                 echo json_encode($params);
             }
         
@@ -569,6 +619,21 @@ class Logistik extends CI_Controller {
             ];
             echo json_encode($params);
 
+        } else if(isset($_POST['getMaxOut'])){
+            $id = $post['id'];
+            $kavling = $post['kavling'];
+
+            $row = $this->Logistik_model->DetailMaterialKeluar($id)->row();
+            $q = "SELECT SUM(jml_keluar) as keluar FROM material_keluar WHERE id_logistik = $id AND kavling_id = $kavling";
+
+            $keluar = $this->db->query($q)->row()->keluar;
+            $max = $row->max;
+
+            $max_out = $max - $keluar;
+            $output = [
+                'max_out' => $max_out
+            ];
+            echo json_encode($output);
         }
     }
 
@@ -1024,5 +1089,28 @@ class Logistik extends CI_Controller {
         } 
         echo json_encode($params);
     }
+
+    public function loadLaporan(){
+        $id_proyek = $_POST['id'];
+        $data = [
+            'kavling' => $this->Logistik_model->getKavlingByProyek($id_proyek)->result(),
+            'id_pro' => $id_proyek
+        ];
+        $this->load->view('logistik/loadLaporan', $data);
+    }
+
+    public function printMaterialOut($pro, $kav){
+        $perum  = $this->db->select('tbl_kavling.*, tbl_perumahan.*')->from('tbl_kavling')->join('tbl_perumahan','tbl_kavling.id_perum = tbl_perumahan.id_perumahan')->where('tbl_kavling.id_kavling', $kav)->get()->row();
+
+        $data = [
+            'perum' => $perum,
+            'id_pro' => $pro,
+            'id_kavling' => $kav,
+            'jenis_material' => $this->logistik->getJenisMaterialKeluar($kav, $pro)->result()
+        ];
+
+        $this->load->view('logistik/print_material_out', $data);
+    }
+
 
 }
