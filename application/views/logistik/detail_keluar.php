@@ -263,7 +263,7 @@ if($group == 1){
                             
                             <div class="form-group col-sm-12">
                             <label>Max Material</label>
-                            <input type="number" readonly name="max" id="max" class="form-control">
+                            <input type="number" required readonly name="max" id="max" class="form-control">
                             </div>
                         </div>
                         </div>

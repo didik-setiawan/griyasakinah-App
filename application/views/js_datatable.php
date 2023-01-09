@@ -6343,6 +6343,7 @@ $(document).on('click', '#add_save', function() {
     var quantity        = $('#add_quantity').val()
     var tgl_pengajuan   = $('#tgl_pengajuan').val()
     let kavling         = $('#kavling').val()
+    let max = $('#max').val();
     
     console.log(kavling);
 
@@ -6358,7 +6359,8 @@ $(document).on('click', '#add_save', function() {
             'id_max': id_max,
             'quantity': quantity,
             'tgl_pengajuan': tgl_pengajuan,
-            'kavling': kavling
+            'kavling': kavling,
+            'max' : max
         },
         dataType: 'json',
         success: function(result) {
@@ -6436,7 +6438,7 @@ $(document).on('click', '#set_edit', function() {
             $('#id_tipe').val(data.id_tipe);
             $('#nama_material').val(data.nama_material);
             $('#quantity').val(data.quantity);
-            $('#max').val(data.max);
+            $('#max').val('0');
 
             var id_tipe = data.id_tipe;
             let id_pro = data.id_pro;
@@ -6463,19 +6465,23 @@ $(document).on('click', '#set_edit', function() {
 $(document).on('change','#kavling', function(){
     let kavling = $(this).val();
     let logistik = $('#id_logistik').val();
-    
+    let max = $('#id_max').val();
 
     $.ajax({
         url: '<?=site_url('logistik/proses/')?>',
         data    : {
             'getMaxOut'    : true, 
             'id'            : logistik,
-            'kavling' : kavling
+            'kavling' : kavling,
+            'max' : max
         },
         type: 'POST',
         dataType: 'JSON',
         success: function(d){
             $('#max').val(d.max_out);
+            if(d.success == false){
+                Swal.fire(d.msg);
+            }
         }
     });
 

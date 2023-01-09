@@ -390,6 +390,9 @@ class Logistik extends CI_Controller {
             $id = $post['id_proyek'];
             $logistik = $post['id_logistik'];
             $kavling = $post['kavling'];
+
+            $quantity = $post['quantity'];
+            $max = $post['max'];
         
             $mat ="SELECT tbl_max_material.*
             FROM `tbl_max_material`
@@ -415,21 +418,98 @@ class Logistik extends CI_Controller {
             $hasil = 0;
             $tot_keluar = 0;
                 
-          
-            
-
             //Cek Create & Edit
             if($post['id_keluar'] == null){
 
-                //Cek Perbandingan Max/Quantity RAB
-                if($stok_mat->stok > $material->max)
-                {
-                        //CEK QUANTITY
-                    $max_out = $material->max - $m_out;
-                    if($post['quantity'] > $max_out){  //
-                        $params = array("success" => false, "status" => 1); 
-                    }else{
-                        $hasil = $stok_mat->stok - $post['quantity'];
+                // //Cek Perbandingan Max/Quantity RAB
+                // if($stok_mat->stok > $material->max)
+                // {
+                //         //CEK QUANTITY
+                //     $max_out = $material->max - $m_out;
+                //     if($post['quantity'] > $max_out){  //
+                //         $params = array("success" => false, "status" => 1); 
+                //     }else{
+                //         $hasil = $stok_mat->stok - $post['quantity'];
+                //         $data = [
+                //             'proyek_material_id'    => $id,
+                //             'logistik_id'           => $logistik,
+                //             'material_keluar'       => $post['quantity'],
+                //             'tgl_keluar'            => $post['tgl_pengajuan'],
+                //             'user_id'               => userId(),
+                //             'kavling'               => $_POST['kavling']
+                //         ];
+                        
+                        
+                //         $datas  = [
+                //             'stok'                  => $hasil
+                //          ];
+                
+                //         $this->Logistik_model->addMaterialKeluar($data);
+                //         $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
+
+                //         $out = [
+                //             'id_logistik' => $logistik,
+                //             'jml_keluar' => $post['quantity'],
+                //             'kavling_id' => $kavling
+                //         ];
+        
+                //         $this->db->insert('material_keluar', $out);
+
+                //         if($this->db->affected_rows() > 0) {
+                //             $params = array("success" => true);
+                //         } else {
+                //             $params = array("success" => false);
+                //         }
+                //     }
+                // }else{ //ELSE Cek Perbandingan Max/Quantity RAB
+
+                //     //CEK QUANTITY
+                //     $max_out = $stok_mat->stok - $m_out;
+                //     if($post['quantity'] > $max_out){
+                //         $params = array("success" => false, "status" => 1); 
+                //     }else{
+
+                //         $hasil = $stok_mat->stok - $post['quantity'];
+                //         $data = [
+                //             'proyek_material_id'    => $id,
+                //             'logistik_id'           => $logistik,
+                //             'material_keluar'       => $post['quantity'],
+                //             'tgl_keluar'            => $post['tgl_pengajuan'],
+                //             'user_id'               => userId(),
+                //             'kavling'               => $_POST['kavling'],
+                //         ];
+                        
+                        
+                //         $datas  = [
+                //             'stok'                  => $hasil,
+                //         ];
+                
+                //         $this->Logistik_model->addMaterialKeluar($data);
+                
+                //         $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
+
+                //         $out = [
+                //             'id_logistik' => $logistik,
+                //             'jml_keluar' => $post['quantity'],
+                //             'kavling_id' => $kavling
+                //         ];
+        
+                //         $this->db->insert('material_keluar', $out);
+
+                //         if($this->db->affected_rows() > 0) {
+                //             $params = array("success" => true);
+                //         } else {
+                //             $params = array("success" => false);
+                //         }
+                //     }
+                // }
+
+
+                //cek perbandingan jumlah & max_out
+                if($quantity > $max){
+                    $params = array("success" => false, "status" => 1); 
+                } else {
+                    $hasil = $stok_mat->stok - $post['quantity'];
                         $data = [
                             'proyek_material_id'    => $id,
                             'logistik_id'           => $logistik,
@@ -439,20 +519,18 @@ class Logistik extends CI_Controller {
                             'kavling'               => $_POST['kavling']
                         ];
                         
-                        
                         $datas  = [
                             'stok'                  => $hasil
-                         ];
-                
-                        $this->Logistik_model->addMaterialKeluar($data);
-                        $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
+                        ];
 
                         $out = [
                             'id_logistik' => $logistik,
                             'jml_keluar' => $post['quantity'],
                             'kavling_id' => $kavling
                         ];
-        
+                
+                        $this->Logistik_model->addMaterialKeluar($data);
+                        $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
                         $this->db->insert('material_keluar', $out);
 
                         if($this->db->affected_rows() > 0) {
@@ -460,49 +538,8 @@ class Logistik extends CI_Controller {
                         } else {
                             $params = array("success" => false);
                         }
-                    }
-                }else{ //ELSE Cek Perbandingan Max/Quantity RAB
-
-                    //CEK QUANTITY
-                    $max_out = $stok_mat->stok - $m_out;
-                    if($post['quantity'] > $max_out){
-                        $params = array("success" => false, "status" => 1); 
-                    }else{
-
-                        $hasil = $stok_mat->stok - $post['quantity'];
-                        $data = [
-                            'proyek_material_id'    => $id,
-                            'logistik_id'           => $logistik,
-                            'material_keluar'       => $post['quantity'],
-                            'tgl_keluar'            => $post['tgl_pengajuan'],
-                            'user_id'               => userId(),
-                            'kavling'               => $_POST['kavling'],
-                        ];
-                        
-                        
-                        $datas  = [
-                            'stok'                  => $hasil,
-                        ];
-                
-                        $this->Logistik_model->addMaterialKeluar($data);
-                
-                        $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
-
-                        $out = [
-                            'id_logistik' => $logistik,
-                            'jml_keluar' => $post['quantity'],
-                            'kavling_id' => $kavling
-                        ];
-        
-                        $this->db->insert('material_keluar', $out);
-
-                        if($this->db->affected_rows() > 0) {
-                            $params = array("success" => true);
-                        } else {
-                            $params = array("success" => false);
-                        }
-                    }
                 }
+
 
                 
 
@@ -511,56 +548,96 @@ class Logistik extends CI_Controller {
                 //ELSE Cek CREATE & EDIT
             }else{
 
-                //Cek Perbandingan Max/Quantity RAB
-                if($stok_mat->stok > $material->max)
-                {
-                    //CEK QUANTITY
-                    $max_out = $material->max - $m_out;
-                    if($post['quantity'] > $max_out){
-                        $params = array("success" => false, "status" => 1); 
-                    }else{
-                        $hasil = $stok_mat->stok - $post['quantity'];
-                        $tot_keluar = $keluar->material_keluar + $post['quantity'];
+                // //Cek Perbandingan Max/Quantity RAB
+                // if($stok_mat->stok > $material->max)
+                // {
+                //     //CEK QUANTITY
+                //     $max_out = $material->max - $m_out;
+                //     if($post['quantity'] > $max_out){
+                //         $params = array("success" => false, "status" => 1); 
+                //     }else{
+                //         $hasil = $stok_mat->stok - $post['quantity'];
+                //         $tot_keluar = $keluar->material_keluar + $post['quantity'];
 
-                        $data = [
-                            'proyek_material_id'    => $id,
-                            'material_keluar'       => $tot_keluar,
-                            'kavling' => $_POST['kavling']
-                        ];
+                //         $data = [
+                //             'proyek_material_id'    => $id,
+                //             'material_keluar'       => $tot_keluar,
+                //             'kavling' => $_POST['kavling']
+                //         ];
                         
-                        $datas  = [
-                            'stok'                  => $hasil,
-                            'proyek_material_id'    => $id,
-                        ];
+                //         $datas  = [
+                //             'stok'                  => $hasil,
+                //             'proyek_material_id'    => $id,
+                //         ];
                 
-                        $this->Logistik_model->edit_Matkeluar($post['id_keluar'], $data);
+                //         $this->Logistik_model->edit_Matkeluar($post['id_keluar'], $data);
 
-                        $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
+                //         $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
 
-                        $out = [
-                            'id_logistik' => $logistik,
-                            'jml_keluar' => $post['quantity'],
-                            'kavling_id' => $kavling
-                        ];
+                //         $out = [
+                //             'id_logistik' => $logistik,
+                //             'jml_keluar' => $post['quantity'],
+                //             'kavling_id' => $kavling
+                //         ];
         
-                        $this->db->insert('material_keluar', $out);
+                //         $this->db->insert('material_keluar', $out);
 
-                        if($this->db->affected_rows() > 0) {
-                            $params = array("success" => true);
-                        } else {
-                            $params = array("success" => false);
-                        }
-                    }
+                //         if($this->db->affected_rows() > 0) {
+                //             $params = array("success" => true);
+                //         } else {
+                //             $params = array("success" => false);
+                //         }
+                //     }
 
-                }else{ //ELSE Cek Perbandingan Max/Quantity RAB
+                // }else{ //ELSE Cek Perbandingan Max/Quantity RAB
                     
-                    //CEK QUANTITY
-                    $max_out = $stok_mat->stok - $m_out;
-                    if($post['quantity'] > $max_out){
-                        $params = array("success" => false, "status" => 1); 
-                    }else{
-                        $hasil = $stok_mat->stok - $post['quantity'];
-                        $tot_keluar = $keluar->material_keluar + $post['quantity'];
+                //     //CEK QUANTITY
+                //     $max_out = $stok_mat->stok - $m_out;
+                //     if($post['quantity'] > $max_out){
+                //         $params = array("success" => false, "status" => 1); 
+                //     }else{
+                //         $hasil = $stok_mat->stok - $post['quantity'];
+                //         $tot_keluar = $keluar->material_keluar + $post['quantity'];
+
+                //         $data = [
+                //             'proyek_material_id'    => $id,
+                //             'material_keluar'       => $tot_keluar,
+                //             'kavling' => $_POST['kavling']
+                //         ];
+                        
+                //         $datas  = [
+                //             'stok'                  => $hasil,
+                //             'proyek_material_id'    => $id,
+                //         ];
+                
+                //         $this->Logistik_model->edit_Matkeluar($post['id_keluar'], $data);
+
+                //         $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
+
+                //         $out = [
+                //             'id_logistik' => $logistik,
+                //             'jml_keluar' => $post['quantity'],
+                //             'kavling_id' => $kavling
+                //         ];
+        
+                //         $this->db->insert('material_keluar', $out);
+
+                //         if($this->db->affected_rows() > 0) {
+                //             $params = array("success" => true);
+                //         } else {
+                //             $params = array("success" => false);
+                //         }
+                //     }
+                // }
+
+
+
+                //cek perbandingan quantity & max keluar
+                if($quantity > $max){
+                    $params = array("success" => false, "status" => 1); 
+                } else {
+                    $hasil = $stok_mat->stok - $post['quantity'];
+                    $tot_keluar = $keluar->material_keluar + $post['quantity'];
 
                         $data = [
                             'proyek_material_id'    => $id,
@@ -573,15 +650,15 @@ class Logistik extends CI_Controller {
                             'proyek_material_id'    => $id,
                         ];
                 
-                        $this->Logistik_model->edit_Matkeluar($post['id_keluar'], $data);
-
-                        $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
-
                         $out = [
                             'id_logistik' => $logistik,
                             'jml_keluar' => $post['quantity'],
                             'kavling_id' => $kavling
                         ];
+
+                        $this->Logistik_model->edit_Matkeluar($post['id_keluar'], $data);
+
+                        $this->Logistik_model->edit_Stok($post['id_stok'], $datas);
         
                         $this->db->insert('material_keluar', $out);
 
@@ -590,7 +667,6 @@ class Logistik extends CI_Controller {
                         } else {
                             $params = array("success" => false);
                         }
-                    }
                 }
 
                 echo json_encode($params);
@@ -620,18 +696,56 @@ class Logistik extends CI_Controller {
             echo json_encode($params);
 
         } else if(isset($_POST['getMaxOut'])){
+
+            if(empty($_POST['max'])){
+                $params = [
+                    'success' => false,
+                    'msg' => 'Maximal material tidak di temukan',
+                    'max_out' => 0
+                ];
+                echo json_encode($params);
+                die;
+            } else if(empty($_POST['kavling'])){
+                $params = [
+                    'success' => false,
+                    'msg' => 'Harap pilih kavling',
+                    'max_out' => 0
+                ];
+                echo json_encode($params);
+                die;
+            }
+
+            //ambil yang di perlukan 
             $id = $post['id'];
             $kavling = $post['kavling'];
+            $max = $post['max'];
 
-            $row = $this->Logistik_model->DetailMaterialKeluar($id)->row();
-            $q = "SELECT SUM(jml_keluar) as keluar FROM material_keluar WHERE id_logistik = $id AND kavling_id = $kavling";
+            $max_material = $this->db->get_where('tbl_max_material',['id_max' => $max])->row()->max;
+            $stok_material = $this->db->get_where('logistik_stok',['logistik_id' => $id])->row()->stok;
+            $material_out = $this->db->select('SUM(jml_keluar) AS keluar')->from('material_keluar')->where(['id_logistik' => $id, 'kavling_id' => $kavling])->get()->row()->keluar;
 
-            $keluar = $this->db->query($q)->row()->keluar;
-            $max = $row->max;
+            //buat perbandingan antara max material & material keluar
+            if($material_out == $max_material){
+                $max_out = 0;
+            } else if($material_out > $max_material){
+                $max_out = 0;
+            } else if($material_out < $max_material){
+                $sisa_jatah = $max_material - $material_out;
+                
+                //buat perbandingan antara sisa jatah & stok material
+                if($sisa_jatah < $stok_material){
+                    $max_out = $sisa_jatah;
+                } else if ($sisa_jatah > $stok_material){
+                    $max_out = $stok_material;
+                } else if($sisa_jatah = $stok_material){
+                    $max_out = $stok_material;
+                }
 
-            $max_out = $max - $keluar;
+            }
+
             $output = [
-                'max_out' => $max_out
+                'max_out' => $max_out,
+                'success' => true
             ];
             echo json_encode($output);
         }
