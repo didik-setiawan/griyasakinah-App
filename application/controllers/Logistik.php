@@ -108,15 +108,20 @@ class Logistik extends CI_Controller {
         $data = [
             'kategori'  => $this->Proyek_model->listKategori(NULL)->result(),
             'mat'  => $this->Proyek_model->listMaterial(NULL)->result(),
-            'detail'    => $this->Logistik_model->get_rekap_material(NULL, null)->result(),
+            'proyek' => $this->logistik->getAllProyek()->result(),
+            'detail'    => $this->Logistik_model->get_rekap_material(NULL, null, null)->result(),
         ];
 
         if(isset($_GET['jenis'])){
-            $data['detail'] = $this->Logistik_model->get_rekap_material($_GET['jenis'], null)->result();
+            $data['detail'] = $this->Logistik_model->get_rekap_material($_GET['jenis'], null, null)->result();
         }
 
         if(isset($_GET['material'])){
-            $data['detail'] = $this->Logistik_model->get_rekap_material(null, $_GET['material'])->result();
+            $data['detail'] = $this->Logistik_model->get_rekap_material(null, $_GET['material'], null)->result();
+        }
+
+        if(isset($_GET['proyek'])){
+            $data['detail'] = $this->Logistik_model->get_rekap_material(null, null, $_GET['proyek'])->result();
         }
 
         $this->template->load('template', 'logistik/rekap_stok_material',$data);

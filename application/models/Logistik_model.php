@@ -1116,28 +1116,26 @@ class Logistik_model extends CI_Model{
         return $this->db->get()->result();
     }
 
-    public function get_rekap_material($jenis = null, $material = null){
+    public function get_rekap_material($jenis = null, $material = null , $proyek = null){
         $this->db->select('
             pengajuan_material.id_perumahan,
             master_logistik.id,
+            master_logistik.material_id,
 
             master_produk_kategori.kategori_produk,
             master_material.nama_material,
             master_produk_unit.nama_satuan,
 
-            logistik_stok.stok,
-            logistik_stok.id_stok,
-
-            SUM(logistik_stok.stok) as stok_logistik
-
+            SUM(material_masuk) AS masuk
+            
         ')->from('master_logistik')
         ->join('pengajuan_material','master_logistik.time = pengajuan_material.time')
         ->join('master_material', 'master_material.id = master_logistik.material_id', 'left')
         ->join('master_produk_unit', 'master_produk_unit.id = master_material.unit_id', 'left')
         ->join('master_produk_kategori', 'master_produk_kategori.id = master_logistik.kategori_id')
-        ->join('logistik_stok', 'logistik_stok.logistik_id = master_logistik.id')
+        ->join('master_logistik_masuk','master_logistik.id = master_logistik_masuk.logistik_id')
         ->where('pengajuan_material.id_perumahan', $this->session->userdata('id_perumahan'))
-        ->where('logistik_stok.type', 0)
+      
        ->group_by('master_logistik.material_id');
 
        if($jenis){
@@ -1145,6 +1143,9 @@ class Logistik_model extends CI_Model{
        }
        if($material){
         $this->db->where('master_logistik.material_id', $material);
+       }
+       if($proyek){
+        $this->db->where('master_logistik.id_proyek', $proyek);
        }
 
        return $this->db->get();
@@ -1213,6 +1214,16 @@ class Logistik_model extends CI_Model{
         ->where('material_keluar.kavling_id', $kavling)
         ->where('master_logistik.id_proyek', $id_pro)
         ->group_by('master_material.id');
+        return $this->db->get();
+    }
+
+    public function getAllProyek(){
+        $this->db->select('master_proyek.nama_proyek, master_proyek.id')
+        ->from('master_proyek')
+        ->join('master_proyek_kavling','master_proyek.id = master_proyek_kavling.proyek_id')
+        ->join('tbl_kavling','master_proyek_kavling.kavling_id = tbl_kavling.id_kavling')
+        ->where('tbl_kavling.id_perum', $this->session->userdata('id_perumahan'))
+        ->group_by('master_proyek.id');
         return $this->db->get();
     }
 

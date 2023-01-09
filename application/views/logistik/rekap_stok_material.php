@@ -25,6 +25,16 @@
                     <div class="card-body style="display: block;">
                         <div class="row">
                         <div class="form-group col-sm-6">
+                            <label>Filter by Proyek</label>
+                            <select name="proyek" id="proyek" class="form-control">
+                                <option value="">--All--</option>
+                                <?php foreach($proyek as $p){ ?>
+                                    <option value="<?= $p->id ?>"><?= $p->nama_proyek ?></option>
+                                    <?php if($_GET['proyek'] == $p->id){ ?>
+                                        <option value="<?= $p->id ?>" selected><?= $p->nama_proyek ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
                         </div>
                             <div class="form-group col-sm-3">
                             <label>Filter Jenis Material</label>
@@ -73,49 +83,45 @@
                                     <?php
                                     $i = 1; 
                                     foreach ($detail as $key => $row){
-                                        $q_masuk_ulang = "SELECT SUM(stok) as st FROM logistik_stok WHERE type = 1 AND stok_id = $row->id_stok";
-                                        $q_masuk = "SELECT SUM(material_masuk) as mm FROM master_logistik_masuk WHERE logistik_id = $row->id";
-                                        $q_keluar = "SELECT SUM(material_keluar) as mk FROM master_logistik_keluar WHERE logistik_id = $row->id";
-                                        $masukUlang = $this->db->query($q_masuk_ulang)->row()->st;
                                         
-                                        $Q_keluartype2 = "SELECT SUM(material_keluar) as keluar FROM master_logistik_keluar JOIN master_logistik ON master_logistik_keluar.logistik_id = master_logistik.id WHERE master_logistik.stok_id = $row->id_stok";
-                                        $keluartype2 = $this->db->query($Q_keluartype2)->row()->keluar;
+                                        $q_masuk = "SELECT SUM(material_masuk) AS masuk FROM master_logistik_masuk JOIN master_logistik ON master_logistik_masuk.logistik_id = master_logistik.id WHERE master_logistik.material_id = $row->material_id";
+
+                                        $q_keluar = "SELECT SUM(jml_keluar) AS keluar FROM material_keluar JOIN master_logistik ON material_keluar.id_logistik = master_logistik.id WHERE master_logistik.material_id = $row->material_id";
+
+                                        $q_stok = "SELECT SUM(stok) AS stock FROM logistik_stok JOIN master_logistik ON logistik_stok.logistik_id = master_logistik.id WHERE master_logistik.material_id = $row->material_id";
                                         
 
+                                        $masuk = $this->db->query($q_masuk)->row()->masuk;
+                                        $keluar = $this->db->query($q_keluar)->row()->keluar;
+                                        $stok = $this->db->query($q_stok)->row()->stock;
 
-                                        $stok = $masukUlang + $row->stok_logistik;
-                                        $masuk = $this->db->query($q_masuk)->row()->mm;
-                                        $keluar = $this->db->query($q_keluar)->row()->mk + $keluartype2;
-
-                                        if($stok == 0){
-                                            $total_stok = "<span class='badge badge-danger text-uppercase'>Kosong</span>";
-                                        }else{
-                                            $total_stok = $stok." <span class='text-bold'>".$row->nama_satuan."</span>";
+                                        if($masuk > 0){
+                                            $s_masuk = '<span class="badge badge-primary">'.$masuk.' '.$row->nama_satuan.'</span>'; 
+                                        } else {
+                                            $s_masuk = '<span class="badge badge-danger">Kosong</span>';
                                         }
 
-                                        if($masuk == 0){
-                                            $total_masuk = "<span class='badge badge-danger text-uppercase'>Kosong</span>";
-                                        }else{
-                                            $total_masuk = $masuk." <span class='text-bold'>".$row->nama_satuan."</span>";
+                                        if($keluar > 0){
+                                            $s_keluar = '<span class="badge badge-primary">'.$keluar.' '.$row->nama_satuan.'</span>'; 
+                                        } else {
+                                            $s_keluar = '<span class="badge badge-danger">Kosong</span>';
                                         }
 
-                                        if($keluar == 0){
-                                            $total_keluar = "<span class='badge badge-danger text-uppercase'>Kosong</span>";
-                                        }else{
-                                            $total_keluar = $keluar." <span class='text-bold'>".$row->nama_satuan."</span>";
+                                        if($stok > 0){
+                                            $s_stok = '<span class="badge badge-primary">'.$stok.' '.$row->nama_satuan.'</span>'; 
+                                        } else {
+                                            $s_stok = '<span class="badge badge-danger">Kosong</span>';
                                         }
-
-
 
                                     ?>
                                         <tr>
                                             <td>
-                                            <span class="text-bold"><?= $row->nama_material?></span><br>
+                                            <span class="text-bold"><?= $row->nama_material ?></span><br>
                                             <span class="small text-danger"><?= $row->kategori_produk ?></span><br>
                                             </td>
-                                            <td class="text-right"><?= $total_masuk ?></span></td>
-                                            <td class="text-right"><?= $total_keluar ?></span></td>
-                                            <td class="text-right"><?= $total_stok ?></td>
+                                            <td class="text-right"><?= $s_masuk ?></span></td>
+                                            <td class="text-right"><?= $s_keluar ?></span></td>
+                                            <td class="text-right"><?= $s_stok ?></td>
                                         </tr>
                                     <?php 
                                     }

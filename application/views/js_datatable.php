@@ -6297,6 +6297,15 @@ if($url_cek == 'inventaris/daftar_barang/'){
 
         });
 
+        $('#proyek').change(function(){
+            let id_proyek = $(this).val();
+            if(id_proyek == ''){
+                window.location.href = '<?= site_url('logistik/rekap_stok_material'); ?>';
+            } else {
+                window.location.href = '<?= site_url('logistik/rekap_stok_material?proyek='); ?>' + id_proyek;
+            }
+        });
+
         </script>
     <?php
 }elseif($url_cek == 'logistik/detail_keluar/'){
