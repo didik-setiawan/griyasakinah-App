@@ -1991,42 +1991,58 @@ class Master_model extends CI_Model{
         if($type == 'inhouse'){
             //count tanda jadi lokasi
             $i_tjl = $this->db->get_where('tanda_jadi_lokasi_inhouse',['id_konsumen' => $id_konsumen])->result();
-            $total_tjl = 0;
-            foreach($i_tjl as $tjl){
-                $q = "SELECT SUM(jumlah) as total FROM inhouse_cicil_tjl WHERE id_pembayaran = $tjl->id_tjl";
-                $cicil = $this->db->query($q)->row()->total;
-                $sisa = $tjl->cicilan_angsuran + $tjl->denda - $cicil;
-                $total_tjl += $sisa;
+            if(isset($i_tjl)){
+                $total_tjl = 0;
+                foreach($i_tjl as $tjl){
+                    $q = "SELECT SUM(jumlah) as total FROM inhouse_cicil_tjl WHERE id_pembayaran = $tjl->id_tjl";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $tjl->cicilan_angsuran + $tjl->denda - $cicil;
+                    $total_tjl += $sisa;
+                }
+            } else {
+                $total_tjl = 0;
             }
 
             //count uang muka 
             $i_um = $this->db->get_where('uang_muka_inhouse',['id_konsumen' => $id_konsumen])->result();
-            $total_um = 0;
-            foreach($i_um as $um){
-                $q = "SELECT SUM(jumlah) as total FROM inhouse_cicil_um WHERE id_pembayaran = $um->id_um";
-                $cicil = $this->db->query($q)->row()->total;
-                $sisa = $um->cicilan_angsuran + $um->denda - $cicil;
-                $total_um += $sisa;
+            if(isset($i_um)){
+                $total_um = 0;
+                foreach($i_um as $um){
+                    $q = "SELECT SUM(jumlah) as total FROM inhouse_cicil_um WHERE id_pembayaran = $um->id_um";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $um->cicilan_angsuran + $um->denda - $cicil;
+                    $total_um += $sisa;
+                }
+            } else {
+                $total_um = 0;
             }
 
             //count harga kesepakatan
             $i_hk = $this->db->get_where('harga_kesepakatan_inhouse',['id_konsumen' => $id_konsumen])->result();
-            $total_hk = 0;
-            foreach($i_hk as $hk){
-                $q = "SELECT SUM(jumlah) as total FROM inhouse_cicil_hk WHERE id_pembayaran = $hk->id_kesepakatan";
-                $cicil = $this->db->query($q)->row()->total;
-                $sisa = $hk->cicilan_angsuran + $hk->denda - $cicil;
-                $total_hk += $sisa;
+            if(isset($i_hk)){
+                $total_hk = 0;
+                foreach($i_hk as $hk){
+                    $q = "SELECT SUM(jumlah) as total FROM inhouse_cicil_hk WHERE id_pembayaran = $hk->id_kesepakatan";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $hk->cicilan_angsuran + $hk->denda - $cicil;
+                    $total_hk += $sisa;
+                }
+            } else {
+                $total_hk = 0;
             }
 
             //count kelebihan tanah
             $i_kt = $this->db->get_where('kelebihan_tanah_inhouse',['id_konsumen' => $id_konsumen])->result();
-            $total_kt = 0;
-            foreach($i_kt as $kt){
-                $q = "SELECT SUM(jumlah) as total FROM inhouse_cicil_kt WHERE id_pembayaran = $kt->id_kt";
-                $cicil = $this->db->query($q)->row()->total;
-                $sisa = $kt->cicilan_angsuran + $kt->denda - $cicil;
-                $total_kt += $sisa;
+            if(isset($i_kt)){
+                $total_kt = 0;
+                foreach($i_kt as $kt){
+                    $q = "SELECT SUM(jumlah) as total FROM inhouse_cicil_kt WHERE id_pembayaran = $kt->id_kt";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $kt->cicilan_angsuran + $kt->denda - $cicil;
+                    $total_kt += $sisa;
+                }
+            } else {    
+                $total_kt = 0;
             }
 
             //count tanda jadi
@@ -2046,17 +2062,110 @@ class Master_model extends CI_Model{
 
             //count tanda jadi lokasi
             $b_tjl = $this->db->get_where('tanda_jadi_lokasi',['id_konsumen' => $id_konsumen])->result();
-            $bank_tjl = 0;
-            foreach($b_tjl as $tjl){
-                $q = "SELECT SUM(jumlah) as total FROM bank_cicil_tjl WHERE id_pembayaran = $tjl->id_tjl";
-                $cicil = $this->db->query($q)->row()->total;
-                $sisa = $tjl->cicilan_angsuran + $tjl->denda - $cicil;
-                $bank_tjl += $sisa;
+            if(isset($b_tjl)){
+                $bank_tjl = 0;
+                foreach($b_tjl as $tjl){
+                    $q = "SELECT SUM(jumlah) as total FROM bank_cicil_tjl WHERE id_pembayaran = $tjl->id_tjl";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $tjl->cicilan_angsuran + $tjl->denda - $cicil;
+                    $bank_tjl += $sisa;
+                }   
+            } else {
+                $bank_tjl = 0;
             }
+
+            //count Uang Muka
+            $b_um = $this->db->get_where('uang_muka',['id_konsumen' => $id_konsumen])->result();
+            if(isset($b_um)){
+                $bank_um = 0;
+                    foreach($b_um as $um){
+                    $q = "SELECT SUM(jumlah) as total FROM bank_cicil_um WHERE id_pembayaran = $um->id_um";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $um->cicilan_angsuran + $um->denda - $cicil;
+                    $bank_um += $sisa;
+                }
+            } else {
+                $bank_um = 0;
+            }
+            
+            //count Kelebihan Tanah
+            $b_kt = $this->db->get_where('kelebihan_tanah',['id_konsumen' => $id_konsumen])->result();
+            if(isset($b_kt)){
+                $bank_kt = 0;
+                    foreach($b_kt as $kt){
+                    $q = "SELECT SUM(jumlah) as total FROM bank_cicil_kt WHERE id_pembayaran = $kt->id_kt";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $kt->cicilan_angsuran + $kt->denda - $cicil;
+                    $bank_kt += $sisa;
+                }
+            } else {
+                $bank_kt = 0;
+            }
+
+            //count realisasi bank
+            $b_rb = $this->db->get_where('angsuran_bank',['id_konsumen' => $id_konsumen])->result();
+            if(isset($b_rb)){
+                $bank_rb = 0;
+                    foreach($b_rb as $rb){
+                    $q = "SELECT SUM(jumlah) as total FROM bank_cicil_rb WHERE id_pembayaran = $rb->id_angsur";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $rb->cicilan_angsuran + $rb->denda - $cicil;
+                    // $bank_rb = $rb->denda;
+                    $bank_rb += $sisa;
+                }
+            } else {
+                $bank_rb = 0;
+            }
+
+            //count piutang bank
+            $b_pb = $this->db->get_where('piutang_bank',['id_konsumen' => $id_konsumen])->result();
+            if(isset($b_pb)){
+                $bank_pb = 0;
+                    foreach($b_pb as $pb){
+                    $q = "SELECT SUM(jumlah) as total FROM bank_cicil_rb WHERE id_pembayaran = $pb->id_piutang";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $pb->cicilan_angsuran + $pb->denda - $cicil;
+                    // $bank_pb = $rb->denda;
+                    $bank_pb += $sisa;
+                }
+            } else {
+                $bank_pb = 0;
+            }
+
+            //count pak
+            $b_pak = $this->db->get_where('pak',['id_konsumen' => $id_konsumen])->result();
+            if(isset($b_pak)){
+                $bank_pak = 0;
+                    foreach($b_pak as $pak){
+                    $q = "SELECT SUM(jumlah) as total FROM bank_cicil_pak WHERE id_pembayaran = $pak->id_pak";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $pak->cicilan_angsuran + $pak->denda - $cicil;
+                    $bank_pak += $sisa;
+                }
+            } else {
+                $bank_pak = 0;
+            }
+
+            //count lain
+            $b_lain = $this->db->get_where('lain_lain',['id_konsumen' => $id_konsumen])->result();
+            if(isset($b_lain)){
+                $bank_lain = 0;
+                    foreach($b_lain as $lain){
+                    $q = "SELECT SUM(jumlah) as total FROM bank_cicil_lain WHERE id_pembayaran = $lain->id_lain";
+                    $cicil = $this->db->query($q)->row()->total;
+                    $sisa = $lain->cicilan_angsuran + $lain->denda - $cicil;
+                    $bank_lain += $sisa;
+                }
+            } else {
+                $bank_lain = 0;
+            }
+
+
             
 
             
-            $hasil_akhir = $bank_tj + $bank_tjl;
+            $hasil_akhir = $bank_tj + $bank_tjl + $bank_um + $bank_rb + $bank_pb + $bank_pak + $bank_lain + $bank_kt;
+            // $hasil_akhir = $bank_lain ; 
 
         }
 

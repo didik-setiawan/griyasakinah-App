@@ -64,7 +64,14 @@
                                 <td><?= $b->nama_konsumen ?></td>
                                 <td><?= $b->no_hp ?></td>
                                 <td><?= $b->blok . $b->no_rumah ?></td>
-                                <td><?= var_dump($keterangan) ?></td>
+                                <td>
+                                  <?php if($keterangan > 0){ ?>
+                                    <span class="badge badge-danger">Belum Lunas</span>
+                                  <?php } else if($keterangan == 0 || $keterangan < 0){ ?>
+                                    <span class="badge badge-success">Lunas</span>
+                                  <?php } ?>  
+                                </td>
+                                </td>
                                 <td>
                                     <button class="btn btn-sm btn-info mb-2 tj"  data-toggle="modal" data-target="#tanda_jadi" data-id="<?= $b->id_konsumen ?>">Tanda Jadi <i class="fa fa-arrow-right" ></i></button><br>
 

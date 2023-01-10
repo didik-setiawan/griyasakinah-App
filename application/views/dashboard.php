@@ -264,7 +264,7 @@
             <?php } ?>
 
 
-            <?php $material = $this->logistik->get_rekap_material()->result(); ?>
+            <?php $material = $this->logistik->get_rekap_material(null, null, null)->result(); ?>
             <?php if($role == 5 || $role == 1 || $role == 2){ ?>
             <div class="col-lg-12">
                 <div class="card">
@@ -281,9 +281,11 @@
                             </thead>
                             <tbody>
                                 <?php foreach($material as $m){ 
-                                    $q_masuk_ulang = "SELECT SUM(stok) as st FROM logistik_stok WHERE type = 1 AND stok_id = $m->id_stok";
-                                    $masukUlang = $this->db->query($q_masuk_ulang)->row()->st;
-                                    $stok = $masukUlang + $m->stok_logistik;
+                                    
+                                    $q_stok = "SELECT SUM(stok) AS stock FROM logistik_stok JOIN master_logistik ON logistik_stok.logistik_id = master_logistik.id WHERE master_logistik.material_id = $m->material_id";
+
+                                    $stok = $this->db->query($q_stok)->row()->stock;
+                                    
                                 ?>
                                 <tr>
                                     <td><b><?= $m->nama_material ?></b><br> <small class="text-danger"><?= $m->kategori_produk ?></small></td>
